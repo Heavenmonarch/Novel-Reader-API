@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.3",
         "cloudinary/cloudinary_php": "^3.1",
+        "firebase/php-jwt": "^7.1",
         "intervention/image": "^4.1",
         "kreait/laravel-firebase": "^7.2",
         "laravel/framework": "^13.8",
