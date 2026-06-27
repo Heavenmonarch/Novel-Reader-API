@@ -11,9 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    ->withProviders([
+        App\Providers\RouteServiceProvider::class,
+    ])
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'auth.jwt' => \App\Http\Middleware\VerifyJwtToken::class,
+            'auth.jwt'    => \App\Http\Middleware\VerifyJwtToken::class,
             'role.author' => \App\Http\Middleware\RequireAuthorRole::class,
         ]);
     })
@@ -21,4 +24,19 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*'),
         );
+
+        $exceptions->render(function (\Illuminate\Validation\ValidationException $e, Request $request) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Validation failed.',
+                'errors'  => $e->errors(),
+            ], 422);
+        });
+
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, Request $request) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Resource not found.',
+            ], 404);
+        });
     })->create();
