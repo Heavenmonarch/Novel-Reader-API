@@ -1,6 +1,6 @@
 <?php
 
-use namespace App\Services;
+namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -8,30 +8,30 @@ use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
-    public function __construct(protected \App\Services\JwtService $jwt) {}
+    public function __construct(protected JwtService $jwt) {}
 
-    public static function register(array $data): array
+    public function register(array $data): array
     {
-        $user = User::Create([
-            'email' => $data['email'],
-            'password' => $data['password'],
-            'username' => $data['username'],
-            'role' => $data['role'] ?? 'reader',
+        $user = User::create([
+            'email'            => $data['email'],
+            'password'         => $data['password'],
+            'username'         => $data['username'],
+            'role'             => $data['role'] ?? 'reader',
             'genre_preference' => $data['genre_preference'] ?? null,
         ]);
 
         return $this->jwt->generateTokenPair($user);
     }
 
-    public static function login(array $data): array
+    public function login(array $data): array
     {
-        $user = $user::where('email', $data['email'])->first();
+        $user = User::where('email', $data['email'])->first();
 
-        if(!$user || !Hash::check($data['password', $user->password])){
-        throw ValidationException::withMessages([
-            'email' => ['These credentials do not match our records'],
-        ]);
-    }
+        if (!$user || !Hash::check($data['password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['These credentials do not match our records.'],
+            ]);
+        }
 
         if (!$user->is_active) {
             throw ValidationException::withMessages([
@@ -42,7 +42,7 @@ class AuthService
         return $this->jwt->generateTokenPair($user);
     }
 
-    public static function refresh (string $refreshToken): array
+    public function refresh(string $refreshToken): array
     {
         $decoded = $this->jwt->verifyRefreshToken($refreshToken);
 
@@ -53,6 +53,7 @@ class AuthService
         }
 
         $user = User::find((int) $decoded->sub);
+
         if (!$user || !$user->is_active) {
             throw ValidationException::withMessages([
                 'refresh_token' => ['User not found or is suspended.'],
