@@ -28,7 +28,7 @@ class JwtService
     }
 
 
-    public function generateAccessToken(User $user): string 
+    public function generateAccessToken(User $user): string
     {
         $now = time();
 
@@ -36,7 +36,7 @@ class JwtService
             'iss' => $this->issuer,
             'sub' => (string) $user->id,
             'iat' => $now,
-            'exp' => $Now + $this->accessTtl,
+            'exp' => $now + $this->accessTtl,
             'type' => 'access',
             'role' => $user->role
         ];
@@ -45,7 +45,7 @@ class JwtService
     }
 
 
-    public function generateRefreshToken (User $user): string 
+    public function generateRefreshToken (User $user): string
     {
         $now = time();
 
@@ -86,8 +86,7 @@ class JwtService
     {
         try {
             $decoded = JWT::decode($token, new Key($this->secret, $this->algo));
-
-            if (($decoded->type ?? '') !== expectedType) {
+            if (($decoded->type) !== $expectedType) {
                 return null;
             }
 

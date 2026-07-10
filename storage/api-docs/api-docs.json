@@ -166,7 +166,7 @@
                     "email": {
                         "type": "string",
                         "format": "email",
-                        "example": "ayanfe@booknest.com"
+                        "example": "user@booknest.com"
                     },
                     "password": {
                         "type": "string",
@@ -199,7 +199,7 @@
                     "email": {
                         "type": "string",
                         "format": "email",
-                        "example": "ayanfe@booknest.com"
+                        "example": "user@booknest.com"
                     },
                     "password": {
                         "type": "string",
@@ -213,7 +213,7 @@
                     },
                     "username": {
                         "type": "string",
-                        "example": "ayanfe"
+                        "example": "user12"
                     },
                     "role": {
                         "type": "string",

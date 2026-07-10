@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         App\Providers\RouteServiceProvider::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->use([
+            \Illuminate\Http\Middleware\HandleCors::class,
+        ]);
         $middleware->alias([
             'auth.jwt'    => \App\Http\Middleware\VerifyJwtToken::class,
             'role.author' => \App\Http\Middleware\RequireAuthorRole::class,

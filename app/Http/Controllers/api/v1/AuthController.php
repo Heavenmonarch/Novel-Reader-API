@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api\v1;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -12,47 +12,46 @@ use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
+    public function __construct(protected AuthService $authService) {}
+
     public function register(RegisterRequest $request): JsonResponse
     {
-        $data = $request->validated();
-        $tokens = AuthService::register($data);
+        $tokens = $this->authService->register($request->validated());
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'Account created successfully',
-            'data' => [$tokens],
+            'status'  => 'success',
+            'message' => 'Account created successfully.',
+            'data'    => $tokens,
         ], 201);
     }
 
     public function login(LoginRequest $request): JsonResponse
     {
-        $data = $request->validated();
-        $tokens = AuthService::login($data);
+        $tokens = $this->authService->login($request->validated());
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'Login successful',
-            'data' => $tokens,
+            'status'  => 'success',
+            'message' => 'Login successful.',
+            'data'    => $tokens,
         ]);
     }
 
     public function refresh(RefreshTokenRequest $request): JsonResponse
     {
-        $data = $request->validated();
-        $tokens = AuthService::refresh($data);
+        $tokens = $this->authService->refresh($request->refresh_token);
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Token refreshed.',
-            'data' => $tokens,
+            'data'    => $tokens,
         ]);
     }
 
-    public function me (Request $request): JsonResponse
+    public function me(Request $request): JsonResponse
     {
         return response()->json([
             'status' => 'success',
-            'data' => $request->user(),
+            'data'   => $request->user(),
         ]);
     }
 }
