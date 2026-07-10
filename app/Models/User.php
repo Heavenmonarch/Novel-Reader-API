@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -33,12 +34,17 @@ class User extends Authenticatable
         ];
     }
 
+    public function books(): HasMany
+    {
+        return $this->hasMany(Book::class);
+    }
+
     public function isAuthor(): bool
     {
         return $this->role === 'author';
     }
 
-    public function isReeader(): bool
+    public function isReader(): bool
     {
         return $this->role === 'reader';
     }

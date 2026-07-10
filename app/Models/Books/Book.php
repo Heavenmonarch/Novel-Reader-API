@@ -59,5 +59,9 @@ class Book extends Model
         return $this->status === 'draft';
     }
 
+    public function isOwnedBy(User $user): bool
+    {
+        return $this->user_id === $user->id;
+    }
 
 }
