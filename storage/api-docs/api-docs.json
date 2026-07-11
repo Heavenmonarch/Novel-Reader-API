@@ -153,6 +153,258 @@
                     }
                 ]
             }
+        },
+        "/books/get-author-books": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get all books by the authenticated author",
+                "operationId": "53f0d73f6a80c15b4877a32f50f51a97",
+                "responses": {
+                    "200": {
+                        "description": "List of author books",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/books/create-book": {
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Create a new draft book",
+                "operationId": "83525430434ba7f1035040ad339e7c38",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateBookRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/books/get-book/{book}": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get a single book",
+                "operationId": "9208b9fd5f492003f208e0abe5d5c6ce",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/books/update-book/{book}": {
+            "patch": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Update a draft book synopsis, cover, genre or tags",
+                "operationId": "1313c04474992a84d2e140cc538b37a8",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateBookRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Book updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden — not owner or book is locked"
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/books/publish-book/{book}": {
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Publish a draft book",
+                "operationId": "39a34a12d95c028cf2e222611001a04b",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book published successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden — not owner"
+                    },
+                    "422": {
+                        "description": "No chapters or already published"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/books/delete-book/{book}": {
+            "delete": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Delete a book",
+                "operationId": "48703f08e437476bca1e7491ff43913a",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book deleted successfully"
+                    },
+                    "403": {
+                        "description": "Forbidden — not owner"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -226,6 +478,81 @@
                     "genre_preference": {
                         "type": "string",
                         "example": "fantasy"
+                    }
+                },
+                "type": "object"
+            },
+            "CreateBookRequest": {
+                "required": [
+                    "title",
+                    "synopsis",
+                    "genre_id"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "The Last Dragon"
+                    },
+                    "synopsis": {
+                        "type": "string",
+                        "example": "A story about the last dragon in a dying world..."
+                    },
+                    "genre_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "example": 3
+                        }
+                    },
+                    "content_rating": {
+                        "type": "string",
+                        "example": "teen",
+                        "enum": [
+                            "everyone",
+                            "teen",
+                            "mature"
+                        ]
+                    },
+                    "cover_image": {
+                        "type": "string",
+                        "example": "https://cloudinary.com/cover.jpg"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateBookRequest": {
+                "properties": {
+                    "synopsis": {
+                        "type": "string",
+                        "example": "An updated synopsis..."
+                    },
+                    "genre_id": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "example": 3
+                        }
+                    },
+                    "content_rating": {
+                        "type": "string",
+                        "example": "mature",
+                        "enum": [
+                            "everyone",
+                            "teen",
+                            "mature"
+                        ]
+                    },
+                    "cover_image": {
+                        "type": "string",
+                        "example": "https://cloudinary.com/newcover.jpg"
                     }
                 },
                 "type": "object"
@@ -305,6 +632,141 @@
                     }
                 },
                 "type": "object"
+            },
+            "BookListResponse": {
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "properties": {
+                            "data": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/BookResponse"
+                                }
+                            },
+                            "current_page": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "per_page": {
+                                "type": "integer",
+                                "example": 15
+                            },
+                            "total": {
+                                "type": "integer",
+                                "example": 100
+                            },
+                            "last_page": {
+                                "type": "integer",
+                                "example": 7
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "BookResponse": {
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "title": {
+                                "type": "string",
+                                "example": "The Last Dragon"
+                            },
+                            "slug": {
+                                "type": "string",
+                                "example": "the-last-dragon"
+                            },
+                            "synopsis": {
+                                "type": "string",
+                                "example": "A story about the last dragon..."
+                            },
+                            "cover_image": {
+                                "type": "string",
+                                "example": "https://cloudinary.com/cover.jpg"
+                            },
+                            "status": {
+                                "type": "string",
+                                "example": "draft"
+                            },
+                            "content_rating": {
+                                "type": "string",
+                                "example": "teen"
+                            },
+                            "total_reads": {
+                                "type": "integer",
+                                "example": 0
+                            },
+                            "total_collections": {
+                                "type": "integer",
+                                "example": 0
+                            },
+                            "total_dragons": {
+                                "type": "integer",
+                                "example": 0
+                            },
+                            "is_locked": {
+                                "type": "boolean",
+                                "example": false
+                            },
+                            "published_at": {
+                                "type": "string",
+                                "example": null
+                            },
+                            "genre": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Fantasy"
+                                    },
+                                    "slug": {
+                                        "type": "string",
+                                        "example": "fantasy"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "slow burn"
+                                        },
+                                        "slug": {
+                                            "type": "string",
+                                            "example": "slow-burn"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {
@@ -320,6 +782,10 @@
         {
             "name": "Auth",
             "description": "Registration, login, token refresh"
+        },
+        {
+            "name": "Books",
+            "description": "Browse and manage books"
         }
     ]
 }

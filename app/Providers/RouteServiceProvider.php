@@ -19,6 +19,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('api')
             ->group(function () {
                 $this->authRoutes();
+                $this->bookRoutes();
             });
     }
 
