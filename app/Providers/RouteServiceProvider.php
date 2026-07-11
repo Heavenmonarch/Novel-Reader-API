@@ -38,4 +38,11 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/api/v1/auth.php'));
     }
+    protected function bookRoutes(): void
+    {
+        Route::prefix('api/v1/books')
+            ->middleware('auth.jwt')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api/v1/books.php'));
+    }
 }
