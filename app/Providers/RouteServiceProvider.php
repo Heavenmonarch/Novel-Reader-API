@@ -20,6 +20,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(function () {
                 $this->authRoutes();
                 $this->bookRoutes();
+                $this->chapterRoutes();
             });
     }
 
