@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
             $table->foreignId('book_id')->constrained()->cascadeOnDelete();
-            $table->stringa('title');
+            $table->string('title');
             $table->longText('content');
             $table->unsignedInteger('order');
             $table->unsignedBigInteger('word_count')->default(0);

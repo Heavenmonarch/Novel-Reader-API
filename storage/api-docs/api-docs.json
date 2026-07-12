@@ -405,6 +405,270 @@
                     }
                 ]
             }
+        },
+        "/books/chapters/{book}/list-all-chapters": {
+            "get": {
+                "tags": [
+                    "Chapters"
+                ],
+                "summary": "Get all chapters of a book",
+                "operationId": "e2521e271fa709c579e02713b15af8ce",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of chapters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChapterListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/books/chapters/{book}/create-chapter": {
+            "post": {
+                "tags": [
+                    "Chapters"
+                ],
+                "summary": "Add a new chapter to a book",
+                "operationId": "9aa803feaba1c79f86ccb65dfeadfc10",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateChapterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Chapter added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChapterResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden — not book owner"
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/books/chapters/{book}/fetch-chapter/{chapter}": {
+            "get": {
+                "tags": [
+                    "Chapters"
+                ],
+                "summary": "Get a single chapter with full content",
+                "operationId": "0b372c9f5d9dafa6402b3a3c2ca586f4",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "chapter",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Chapter details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChapterResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Chapter not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/books/chapters/{book}/update-chapter/{chapter}": {
+            "patch": {
+                "tags": [
+                    "Chapters"
+                ],
+                "summary": "Update a chapter title or content",
+                "operationId": "c1f233df1d57ba12309161371dedc94a",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "chapter",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateChapterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Chapter updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChapterResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden — not book owner"
+                    },
+                    "422": {
+                        "description": "Validation failed"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/books/chapters/{book}/delete-chapter/{chapter}": {
+            "delete": {
+                "tags": [
+                    "Chapters"
+                ],
+                "summary": "Delete a chapter",
+                "operationId": "59e1e6460a0cae882e444b40d3e873e1",
+                "parameters": [
+                    {
+                        "name": "book",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "chapter",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Chapter deleted successfully"
+                    },
+                    "403": {
+                        "description": "Forbidden — not book owner"
+                    },
+                    "404": {
+                        "description": "Chapter not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -553,6 +817,36 @@
                     "cover_image": {
                         "type": "string",
                         "example": "https://cloudinary.com/newcover.jpg"
+                    }
+                },
+                "type": "object"
+            },
+            "CreateChapterRequest": {
+                "required": [
+                    "title",
+                    "content"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "The Beginning"
+                    },
+                    "content": {
+                        "type": "string",
+                        "example": "It was a dark and stormy night when the last dragon spread its wings..."
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateChapterRequest": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "The Beginning Revised"
+                    },
+                    "content": {
+                        "type": "string",
+                        "example": "It was a bright and stormy night when the last dragon spread its wings..."
                     }
                 },
                 "type": "object"
@@ -767,6 +1061,130 @@
                     }
                 },
                 "type": "object"
+            },
+            "ChapterListResponse": {
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "properties": {
+                            "data": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "The Beginning"
+                                        },
+                                        "order": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "word_count": {
+                                            "type": "integer",
+                                            "example": 1500
+                                        },
+                                        "total_reads": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "is_published": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "published_at": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "current_page": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "per_page": {
+                                "type": "integer",
+                                "example": 15
+                            },
+                            "total": {
+                                "type": "integer",
+                                "example": 10
+                            },
+                            "last_page": {
+                                "type": "integer",
+                                "example": 1
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ChapterResponse": {
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "data": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "book_id": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "title": {
+                                "type": "string",
+                                "example": "The Beginning"
+                            },
+                            "content": {
+                                "type": "string",
+                                "example": "It was a dark and stormy night..."
+                            },
+                            "order": {
+                                "type": "integer",
+                                "example": 1
+                            },
+                            "word_count": {
+                                "type": "integer",
+                                "example": 1500
+                            },
+                            "total_reads": {
+                                "type": "integer",
+                                "example": 0
+                            },
+                            "is_published": {
+                                "type": "boolean",
+                                "example": false
+                            },
+                            "published_at": {
+                                "type": "string",
+                                "example": null
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "example": "2026-07-11T20:11:40.000000Z"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "example": "2026-07-11T20:11:40.000000Z"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {
@@ -786,6 +1204,10 @@
         {
             "name": "Books",
             "description": "Browse and manage books"
+        },
+        {
+            "name": "Chapters",
+            "description": "Chapter management"
         }
     ]
 }
