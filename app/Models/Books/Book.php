@@ -47,6 +47,11 @@ class Book extends Model
         return $this->hasMany(Chapter::class)->orderBy('order');
     }
 
+    public function libraryEntries(): HasMany
+    {
+        return $this->hasMany(Library::class);
+    }
+
 
 
     public function isPublished(): bool
