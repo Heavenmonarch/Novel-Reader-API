@@ -51,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function chapterRoutes(): void
     {
-        Route::prefix('api/v1/books/chapters')
+        Route::prefix('api/v1/books/{book}/chapters')
             ->middleware('auth.jwt')
             ->namespace($this->namespace)
             ->group(base_path('routes/api/v1/chapters.php'));
