@@ -22,6 +22,7 @@ class RouteServiceProvider extends ServiceProvider
                 $this->bookRoutes();
                 $this->chapterRoutes();
                 $this->libraryRoutes();
+                $this->dragonRoutes();
             });
     }
 
@@ -63,5 +64,13 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('auth.jwt')
             ->namespace($this->namespace)
             ->group(base_path('routes/api/v1/library.php'));
+    }
+
+    public function dragonRoutes(): void
+    {
+        Route::prefix('api/v1/dragon')
+            ->middleware('auth.jwt')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api/v1/dragon.php'));
     }
 }
