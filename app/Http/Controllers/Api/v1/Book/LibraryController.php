@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers\Api\v1\Book;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Library\AddToLibraryRequest;

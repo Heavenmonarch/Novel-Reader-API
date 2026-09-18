@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+<<<<<<< HEAD
 use App\Models\Book;
 use App\Models\Library;
 use App\Models\User;
@@ -15,11 +16,27 @@ class LibraryService
 
         abort_if(!$book->isPublished(), 422, 'You can only add published books to your library.');
         abort_if($book->isOwnedBy($user), 422, 'You cannot add your own book to your library.');
+=======
+
+use App\Models\Books\Book;
+use App\Models\Books\Library;
+use App\Models\User;
+
+class LibraryService
+{
+    public function addToLibrary(User $user,$bookId): Library
+    {
+        $book = Book::findOrFail($bookId);
+
+        abort_if(!$book->isPublished(),422, 'You can only add published books to your library');
+//        abort_if($book->isOwnedBy($user),422, 'You can only add books to your library');
+>>>>>>> 5916473d51b9aca03c60af1d5fc2eb762e51c971
 
         $entry = Library::firstOrCreate([
             'user_id' => $user->id,
             'book_id' => $bookId,
         ]);
+<<<<<<< HEAD
 
         abort_if(!$entry->wasRecentlyCreated, 422, 'This book is already in your library.');
 
@@ -59,3 +76,9 @@ class LibraryService
             ->exists();
     }
 }
+=======
+    }
+
+}
+
+>>>>>>> 5916473d51b9aca03c60af1d5fc2eb762e51c971
