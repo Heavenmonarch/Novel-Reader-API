@@ -57,6 +57,10 @@ class Book extends Model
         return $this->hasMany(Dragon::class);
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 
 
     public function isPublished(): bool
